@@ -7,6 +7,7 @@ import { Map, Star, ExternalLink, LogOut } from 'lucide-react';
 
 import { logout } from '@/app/actions/auth';
 import { cn } from '@/lib/utils';
+import { LogoMark } from '@/components/brand/LogoMark';
 import { DashLocaleSwitcher } from './DashLocaleSwitcher';
 
 const NAV = [
@@ -26,13 +27,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside className="flex flex-col border-b border-pharaoh-gold/12 bg-pharaoh-black md:border-b-0 md:border-e md:border-pharaoh-gold/12">
         <div className="flex items-center gap-2.5 px-6 py-5">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo-icon.png"
-            alt=""
-            aria-hidden="true"
-            className="h-8 w-auto mix-blend-lighten"
-          />
+          <LogoMark className="h-8 w-auto" />
           <span className="font-display text-sm font-semibold text-pharaoh-cream/85">
             {t('brand')}
           </span>

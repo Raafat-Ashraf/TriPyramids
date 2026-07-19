@@ -6,6 +6,7 @@ import { Lock, AlertCircle } from 'lucide-react';
 
 import { login } from '@/app/actions/auth';
 import { Button } from '@/components/ui/Button';
+import { LogoMark } from '@/components/brand/LogoMark';
 import { DashLocaleSwitcher } from './DashLocaleSwitcher';
 
 export function LoginForm() {
@@ -34,8 +35,7 @@ export function LoginForm() {
 
         <div className="rounded-2xl border border-pharaoh-gold/20 bg-pharaoh-black/70 p-8 shadow-gold backdrop-blur-sm">
           <div className="flex flex-col items-center text-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt={tBrand('brand')} className="h-20 w-auto" />
+            <LogoMark className="h-16 w-auto" title={tBrand('brand')} />
             <h1 className="mt-5 font-display text-2xl font-bold text-pharaoh-cream">
               {t('title')}
             </h1>

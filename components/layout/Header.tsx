@@ -6,6 +6,7 @@ import { Menu, X } from 'lucide-react';
 
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
+import { LogoMark } from '@/components/brand/LogoMark';
 import { LocaleSwitcher } from './LocaleSwitcher';
 
 const NAV = [
@@ -20,9 +21,11 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Solid/blurred header once scrolled past the hero's top band.
+  // Solid/blurred header once scrolled past the hero's top band. The threshold
+  // is compared against the current state so we only re-render on a crossing,
+  // not on every scroll event.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -31,35 +34,37 @@ export function Header() {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
+        'fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out motion-reduce:transition-none',
         scrolled
           ? 'border-b border-pharaoh-gold/15 bg-pharaoh-black/95 shadow-lift backdrop-blur-md'
-          : 'border-b border-transparent bg-pharaoh-black/30 backdrop-blur-sm',
+          : // At the top the bar stays out of the way: no fill, no border — just a
+            // soft scrim so the nav keeps its contrast over the hero photograph.
+            'border-b border-transparent bg-gradient-to-b from-pharaoh-black/70 via-pharaoh-black/30 to-transparent',
       )}
     >
       <div
         className={cn(
-          'shell flex items-center justify-between gap-4 transition-[height] duration-300',
-          scrolled ? 'h-16' : 'h-[var(--header-height)]',
+          'shell flex items-center justify-between gap-4 transition-[height] duration-300 ease-out motion-reduce:transition-none',
+          scrolled ? 'h-[3.75rem]' : 'h-[var(--header-height)]',
         )}
       >
         {/* Brand lockup — identical dimensions in every locale */}
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pharaoh-gold"
+          aria-label={t('brandName')}
+          className="group flex shrink-0 items-center gap-3 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pharaoh-gold focus-visible:ring-offset-2 focus-visible:ring-offset-pharaoh-black"
           onClick={() => setOpen(false)}
         >
-          <img
-            src="/logo-icon.png"
-            alt=""
-            aria-hidden="true"
-            className="h-9 w-auto shrink-0 mix-blend-lighten"
+          <LogoMark
+            className={cn(
+              'w-auto transition-[height] duration-300 ease-out motion-reduce:transition-none',
+              scrolled ? 'h-9' : 'h-11',
+            )}
           />
           <span className="whitespace-nowrap font-display text-lg font-bold uppercase leading-none tracking-wide sm:text-xl">
             <span className="text-pharaoh-gold">Tri</span>
             <span className="text-pharaoh-cream">Pyramids</span>
           </span>
-          <span className="sr-only">{t('brandName')}</span>
         </Link>
 
         <nav aria-label={t('a11y.mainNav')} className="hidden items-center gap-8 md:flex">

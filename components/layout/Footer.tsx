@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 
 import { Link } from '@/i18n/navigation';
 import { GlyphDivider } from '@/components/Glyphs';
+import { LogoMark } from '@/components/brand/LogoMark';
 
 const EXPLORE = [
   { key: 'home', href: '/' },
@@ -25,13 +26,14 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           {/* Brand */}
           <div>
-            <img
-              src="/logo.png"
-              alt={t('brandName')}
-              className="h-16 w-auto"
-              width={64}
-              height={64}
-            />
+            <div className="flex items-center gap-3">
+              <LogoMark className="h-12 w-auto" />
+              <span className="whitespace-nowrap font-display text-xl font-bold uppercase leading-none tracking-wide">
+                <span className="text-pharaoh-gold">Tri</span>
+                <span className="text-pharaoh-cream">Pyramids</span>
+              </span>
+              <span className="sr-only">{t('brandName')}</span>
+            </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-pharaoh-cream/75">
               {t('footer.blurb')}
             </p>
