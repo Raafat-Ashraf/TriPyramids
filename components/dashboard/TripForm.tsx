@@ -110,7 +110,7 @@ export function TripForm({
           </div>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className={labelClass} htmlFor="location">
               {t('fields.location')}
@@ -119,21 +119,6 @@ export function TripForm({
               id="location"
               name="location"
               defaultValue={trip?.location ?? ''}
-              className={field}
-            />
-          </div>
-          <div>
-            <label className={labelClass} htmlFor="price">
-              {t('fields.price')}
-            </label>
-            <input
-              id="price"
-              name="price"
-              type="number"
-              min="0"
-              step="1"
-              dir="ltr"
-              defaultValue={trip?.price ?? ''}
               className={field}
             />
           </div>

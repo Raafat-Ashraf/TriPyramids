@@ -3,9 +3,9 @@
 import { useMemo, useState, useTransition } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { Check, X, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 
-import { setReviewStatus, deleteReview } from '@/app/actions/admin-reviews';
+import { deleteReview } from '@/app/actions/admin-reviews';
 import type { Locale } from '@/i18n/routing';
 import type { ReviewStatus, ReviewWithTrip } from '@/lib/types';
 import { formatDate } from '@/lib/format';
@@ -60,13 +60,6 @@ export function ReviewsManager({ reviews }: { reviews: ReviewWithTrip[] }) {
       await action();
       router.refresh();
     });
-  }
-
-  function changeStatus(id: string, status: ReviewStatus) {
-    const formData = new FormData();
-    formData.set('id', id);
-    formData.set('status', status);
-    runAction(() => setReviewStatus(formData));
   }
 
   function removeReview(id: string) {
@@ -157,28 +150,6 @@ export function ReviewsManager({ reviews }: { reviews: ReviewWithTrip[] }) {
                   </div>
 
                   <div className="flex items-center gap-1.5">
-                    {review.status !== 'approved' && (
-                      <button
-                        type="button"
-                        onClick={() => changeStatus(review.id, 'approved')}
-                        disabled={pending}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/40 px-3 py-1.5 text-xs font-medium text-emerald-300 transition-colors hover:bg-emerald-500/15 disabled:opacity-50"
-                      >
-                        <Check className="size-3.5" />
-                        {t('approve')}
-                      </button>
-                    )}
-                    {review.status !== 'rejected' && (
-                      <button
-                        type="button"
-                        onClick={() => changeStatus(review.id, 'rejected')}
-                        disabled={pending}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-pharaoh-gold/30 px-3 py-1.5 text-xs font-medium text-pharaoh-cream/75 transition-colors hover:bg-pharaoh-gold/10 disabled:opacity-50"
-                      >
-                        <X className="size-3.5" />
-                        {t('reject')}
-                      </button>
-                    )}
                     <button
                       type="button"
                       onClick={() => removeReview(review.id)}

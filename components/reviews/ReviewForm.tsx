@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 
@@ -14,6 +15,7 @@ const fieldClass =
 
 export function ReviewForm({ tripId }: { tripId?: string }) {
   const t = useTranslations('reviews.form');
+  const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [status, setStatus] = useState<ReviewSubmitStatus | null>(null);
   // Bumped on success so the star picker (React-controlled) remounts and clears.
@@ -29,6 +31,8 @@ export function ReviewForm({ tripId }: { tripId?: string }) {
       if (result.status === 'success') {
         formRef.current?.reset();
         setFormKey((key) => key + 1);
+        // The review is published immediately — refresh so it shows up above.
+        router.refresh();
       }
     });
   }

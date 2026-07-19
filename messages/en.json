@@ -77,7 +77,7 @@
     "ratingOutOf": "{count} out of 5",
     "form": {
       "title": "Share your experience",
-      "subtitle": "Your review is read by our team before it appears on the site.",
+      "subtitle": "Share your experience with fellow travelers — it appears on the site right away.",
       "name": "Your name",
       "namePlaceholder": "e.g. Sarah M.",
       "email": "Email",
@@ -87,7 +87,7 @@
       "commentPlaceholder": "Tell other travelers about your journey…",
       "submit": "Submit review",
       "submitting": "Submitting…",
-      "success": "Thank you! Your review is awaiting approval and will appear once our team has reviewed it.",
+      "success": "Thank you! Your review has been published.",
       "errorValidation": "Please add your name, a rating and a comment.",
       "errorRate": "You've submitted a few reviews recently. Please try again a little later.",
       "errorGeneric": "Something went wrong. Please try again."

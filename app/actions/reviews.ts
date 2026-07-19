@@ -65,7 +65,9 @@ export async function submitReview(formData: FormData): Promise<ReviewResult> {
     email: email ? email.slice(0, 200) : null,
     rating,
     comment: comment.slice(0, 2000),
-    status: 'pending',
+    // Reviews are published immediately — no admin approval step. The admin can
+    // still delete anything unwanted from the dashboard.
+    status: 'approved',
   });
 
   if (error) {

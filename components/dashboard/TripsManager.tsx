@@ -8,7 +8,6 @@ import { Plus, Pencil, Trash2, MapPin } from 'lucide-react';
 import { deleteTrip } from '@/app/actions/admin-trips';
 import type { Locale } from '@/i18n/routing';
 import type { Trip } from '@/lib/types';
-import { formatPrice } from '@/lib/format';
 import { Button } from '@/components/ui/Button';
 import { TripForm } from './TripForm';
 
@@ -69,7 +68,6 @@ export function TripsManager({ trips }: { trips: Trip[] }) {
                 <tr className="border-b border-pharaoh-gold/12 bg-pharaoh-gold/[0.04] text-start text-xs uppercase tracking-wider text-pharaoh-cream/55">
                   <th className="px-4 py-3 text-start font-semibold">{t('table.trip')}</th>
                   <th className="px-4 py-3 text-start font-semibold">{t('table.location')}</th>
-                  <th className="px-4 py-3 text-start font-semibold">{t('table.price')}</th>
                   <th className="px-4 py-3 text-start font-semibold">{t('table.duration')}</th>
                   <th className="px-4 py-3 text-end font-semibold">{t('table.actions')}</th>
                 </tr>
@@ -108,9 +106,6 @@ export function TripsManager({ trips }: { trips: Trip[] }) {
                     </td>
                     <td className="px-4 py-3.5 text-pharaoh-cream/70">
                       {trip.location ?? '—'}
-                    </td>
-                    <td className="px-4 py-3.5 text-pharaoh-cream/70">
-                      {trip.price != null ? formatPrice(trip.price, locale) : '—'}
                     </td>
                     <td className="px-4 py-3.5 text-pharaoh-cream/70">
                       {trip.duration_days != null
