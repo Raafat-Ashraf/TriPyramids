@@ -1,13 +1,13 @@
 import { useLocale, useTranslations } from 'next-intl';
-import { ArrowLeft, MapPin, Clock, Tag } from 'lucide-react';
+import { ArrowLeft, MapPin, Clock } from 'lucide-react';
 
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 import type { Review, Trip } from '@/lib/types';
-import { formatPrice } from '@/lib/format';
 import { GlyphDivider, SunDisk } from '@/components/Glyphs';
 import { ReviewCard } from '@/components/reviews/ReviewCard';
 import { ReviewForm } from '@/components/reviews/ReviewForm';
+import { BookButton } from './BookButton';
 
 export function TripDetail({
   trip,
@@ -26,54 +26,55 @@ export function TripDetail({
 
   return (
     <div className="bg-pharaoh-black pt-[var(--header-height)]">
-      {/* Banner */}
-      <div className="relative h-[42vh] min-h-[320px] w-full overflow-hidden">
-        {trip.image_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={trip.image_url}
-            alt={title}
-            className="size-full object-cover"
-          />
-        ) : (
-          <div className="flex size-full items-center justify-center bg-gradient-to-br from-pharaoh-goldDark/30 via-pharaoh-black to-pharaoh-black">
-            <SunDisk size={90} className="text-pharaoh-gold/30" />
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-pharaoh-black via-pharaoh-black/50 to-pharaoh-black/30" />
-
-        <div className="shell absolute inset-x-0 bottom-0">
-          <div className="pb-8">
-            <Link
-              href="/#trips"
-              className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-pharaoh-cream/70 transition-colors hover:text-pharaoh-gold"
-            >
-              <ArrowLeft className="size-4 rtl:-scale-x-100" />
-              {tr('back')}
-            </Link>
-            <h1 className="font-display text-4xl font-extrabold text-pharaoh-cream sm:text-5xl">
-              {title}
-            </h1>
-            <div className="mt-4 flex flex-wrap items-center gap-3">
-              {trip.location && (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-pharaoh-gold/25 bg-pharaoh-black/50 px-3.5 py-1.5 text-sm text-pharaoh-cream backdrop-blur-sm">
-                  <MapPin className="size-4 text-pharaoh-gold" />
-                  {trip.location}
-                </span>
-              )}
-              {trip.duration_days != null && (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-pharaoh-gold/25 bg-pharaoh-black/50 px-3.5 py-1.5 text-sm text-pharaoh-cream backdrop-blur-sm">
-                  <Clock className="size-4 text-pharaoh-gold" />
-                  {t('durationDays', { count: trip.duration_days })}
-                </span>
-              )}
-              {trip.price != null && (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-pharaoh-gold/40 bg-pharaoh-gold/15 px-3.5 py-1.5 text-sm font-semibold text-pharaoh-gold backdrop-blur-sm">
-                  <Tag className="size-4" />
-                  {t('priceFrom')} {formatPrice(trip.price, locale)}
-                </span>
-              )}
+      {/* Banner: a fixed-height image band, with the content as a normal-flow
+          sibling pulled up over it. Keeping the content out of the image box
+          (rather than absolutely positioned inside it) makes its width the plain
+          viewport width, so the title wraps and RTL aligns correctly. */}
+      <div className="relative">
+        <div className="relative h-[44vh] min-h-[300px] w-full overflow-hidden sm:h-[52vh]">
+          {trip.image_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={trip.image_url}
+              alt={title}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-pharaoh-goldDark/30 via-pharaoh-black to-pharaoh-black">
+              <SunDisk size={90} className="text-pharaoh-gold/30" />
             </div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-pharaoh-black via-pharaoh-black/45 to-pharaoh-black/15" />
+        </div>
+
+        <div className="shell relative z-10 -mt-28 pb-2 sm:-mt-36">
+          <Link
+            href="/#trips"
+            className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-pharaoh-cream/80 transition-colors hover:text-pharaoh-gold"
+          >
+            <ArrowLeft className="size-4 rtl:-scale-x-100" />
+            {tr('back')}
+          </Link>
+          <h1 className="font-display text-2xl font-extrabold leading-tight text-pharaoh-cream [overflow-wrap:anywhere] sm:text-4xl lg:text-5xl">
+            {title}
+          </h1>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            {trip.location && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-pharaoh-gold/25 bg-pharaoh-black/50 px-3.5 py-1.5 text-sm text-pharaoh-cream backdrop-blur-sm">
+                <MapPin className="size-4 text-pharaoh-gold" />
+                {trip.location}
+              </span>
+            )}
+            {trip.duration_days != null && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-pharaoh-gold/25 bg-pharaoh-black/50 px-3.5 py-1.5 text-sm text-pharaoh-cream backdrop-blur-sm">
+                <Clock className="size-4 text-pharaoh-gold" />
+                {t('durationDays', { count: trip.duration_days })}
+              </span>
+            )}
+          </div>
+
+          <div className="mt-6">
+            <BookButton tripTitle={title} size="lg" className="w-full sm:w-auto" />
           </div>
         </div>
       </div>

@@ -46,7 +46,7 @@ export function ReviewForm({ tripId }: { tripId?: string }) {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="rounded-2xl border border-pharaoh-gold/15 bg-pharaoh-gold/[0.03] p-6 sm:p-8"
+      className="relative rounded-2xl border border-pharaoh-gold/15 bg-pharaoh-gold/[0.03] p-6 sm:p-8"
     >
       <h3 className="font-display text-2xl font-bold text-pharaoh-cream">
         {t('title')}
@@ -55,8 +55,13 @@ export function ReviewForm({ tripId }: { tripId?: string }) {
 
       {tripId && <input type="hidden" name="tripId" value={tripId} />}
 
-      {/* Honeypot — hidden from humans; a filled value flags a bot. */}
-      <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+      {/* Honeypot — hidden from humans; a filled value flags a bot. Contained
+          inside the (relative) form and zero-sized so it never affects layout
+          or causes horizontal overflow. */}
+      <div
+        className="pointer-events-none absolute bottom-0 start-0 h-px w-px overflow-hidden opacity-0"
+        aria-hidden="true"
+      >
         <label htmlFor="website">Website</label>
         <input
           id="website"

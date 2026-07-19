@@ -10,6 +10,9 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    /* Global guard: nothing may cause horizontal scroll. `clip` avoids the
+       scroll-container / position:sticky side effects of `hidden`. */
+    overflow-x: clip;
   }
 
   body {

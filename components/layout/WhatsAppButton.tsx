@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion, useReducedMotion } from 'framer-motion';
 
+import { WHATSAPP_NUMBER } from '@/lib/whatsapp';
+
 /**
  * Floating WhatsApp contact button.
  *
@@ -16,9 +18,6 @@ import { motion, useReducedMotion } from 'framer-motion';
  * Everything animates on `transform`/`opacity` only, and the whole behaviour
  * collapses to a static button under `prefers-reduced-motion`.
  */
-
-// The brand's WhatsApp number, digits only (E.164 without the +).
-const WHATSAPP_NUMBER = '201000000000';
 
 export function WhatsAppButton() {
   const t = useTranslations('common');

@@ -19,7 +19,8 @@
     },
     "whatsapp": {
       "label": "Chat with us",
-      "message": "Hi TriPyramids, I'd like to know more about your trips."
+      "message": "Hi TriPyramids, I'd like to know more about your trips.",
+      "bookMessage": "Hi TriPyramids, I'd like to book this trip: {trip}."
     },
     "footer": {
       "blurb": "Curated Pharaonic journeys across the land of the Nile — from the Giza plateau to the temples of the south, guided by people who love this country.",
@@ -55,6 +56,7 @@
     "perTrip": "per person",
     "durationDays": "{count, plural, one {# day} other {# days}}",
     "viewTrip": "View journey",
+    "book": "Book now",
     "locationLabel": "Location",
     "detail": {
       "overview": "Overview",
