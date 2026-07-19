@@ -31,3 +31,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# claude code (machine-local settings, e.g. the auto-push hook)
+.claude/settings.local.json
