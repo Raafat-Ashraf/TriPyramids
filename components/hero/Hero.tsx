@@ -72,6 +72,20 @@ export function Hero() {
         style={prefersReduced ? undefined : { y: photoY, scale: photoScale }}
         aria-hidden="true"
       >
+        {/* Art direction by breakpoint. The landscape source can't survive a
+            portrait crop — `object-cover` on a phone throws away the plateau and
+            lands on foreground trees. So phones get a genuinely portrait 2:3
+            frame of the same scene (Khafre, Menkaure and the Sphinx), and wide
+            screens keep the full vista. */}
+        <Image
+          src="/hero-bg-mobile.jpg"
+          alt=""
+          fill
+          priority
+          quality={80}
+          sizes="100vw"
+          className="object-cover object-[center_35%] sm:hidden"
+        />
         <Image
           src="/hero-bg.jpg"
           alt=""
@@ -79,15 +93,20 @@ export function Hero() {
           priority
           quality={80}
           sizes="100vw"
-          className="object-cover object-[center_38%]"
+          className="hidden object-cover object-[center_38%] sm:block"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-pharaoh-black/55 via-transparent to-pharaoh-black/45" />
+        {/* The mid-tones of the photo are bright sky, which the stat row sits
+            over on mobile — hold a little more density there at small sizes. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-pharaoh-black/65 via-pharaoh-black/25 to-pharaoh-black/55 sm:from-pharaoh-black/55 sm:via-transparent sm:to-pharaoh-black/45" />
       </motion.div>
 
       {/* Plane 2 — the animated pyramid scene, above the overlay so it reads
           clearly against the photo. Lower ~45% of the hero, full width. */}
       <motion.div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[42svh] sm:h-[46svh]"
+        /* Shorter on mobile: the scene is a 2.5:1 letterboxed SVG, so a tall
+           box on a narrow screen wasted vertical space and pushed the copy into
+           the header. */
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[32svh] sm:h-[46svh]"
         style={prefersReduced ? undefined : { y: sceneY }}
         aria-hidden="true"
       >
@@ -97,7 +116,7 @@ export function Hero() {
 
       {/* Plane 3 — copy, vertically centered in the space above the scene. */}
       <motion.div
-        className="absolute inset-0 z-10 flex flex-col justify-center pt-[var(--header-height)] pb-[42svh] sm:pb-[46svh]"
+        className="absolute inset-0 z-10 flex flex-col justify-center pt-[calc(var(--header-height)+1rem)] pb-[32svh] sm:pt-[var(--header-height)] sm:pb-[46svh]"
         style={prefersReduced ? undefined : { y: copyY }}
       >
         <div className="shell">
@@ -107,7 +126,7 @@ export function Hero() {
                 of the photo. */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -inset-x-10 -inset-y-12 -z-[1] rounded-[3rem] bg-pharaoh-black/38 blur-3xl"
+              className="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-[1] rounded-[3rem] bg-pharaoh-black/55 blur-2xl sm:-inset-x-10 sm:-inset-y-12 sm:bg-pharaoh-black/38 sm:blur-3xl"
             />
 
             <h1 className="font-display text-[1.75rem] font-extrabold leading-[1.12] text-pharaoh-cream drop-shadow-[0_2px_20px_rgba(0,0,0,0.7)] sm:text-5xl lg:text-6xl">
@@ -133,17 +152,12 @@ export function Hero() {
               initial={reveal ? { opacity: 0, y: 20 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.42, ease: EASE }}
-              className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4"
+              className="mt-6 flex"
             >
               <Magnetic strength={10} className="w-full sm:w-auto">
                 <ButtonLink href="/#trips" size="lg" className="w-full justify-center sm:w-auto">
                   {t('ctaPrimary')}
                   <ArrowUpRight className="size-5 rtl:-scale-x-100" aria-hidden="true" />
-                </ButtonLink>
-              </Magnetic>
-              <Magnetic strength={8} className="w-full sm:w-auto">
-                <ButtonLink href="/#reviews" size="lg" variant="onDark" className="w-full justify-center sm:w-auto">
-                  {t('ctaSecondary')}
                 </ButtonLink>
               </Magnetic>
             </motion.div>
@@ -152,7 +166,7 @@ export function Hero() {
               initial={reveal ? { opacity: 0, y: 20 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.56, ease: EASE }}
-              className="mt-8 grid max-w-md grid-cols-3 gap-x-3 border-t border-pharaoh-gold/25 pt-5 sm:gap-x-6"
+              className="mt-6 grid max-w-md grid-cols-3 gap-x-3 border-t border-pharaoh-gold/25 pt-4 sm:mt-8 sm:gap-x-6 sm:pt-5"
             >
               {stats.map((stat) => (
                 <div key={stat.key} className="min-w-0">

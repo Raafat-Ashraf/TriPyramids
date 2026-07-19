@@ -7,6 +7,7 @@ import { routing } from '@/i18n/routing';
 import { cairo, poppins, playfair } from '@/app/fonts';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import '../globals.css';
 
 export async function generateMetadata({
@@ -57,6 +58,7 @@ export default async function LocaleLayout({
             {children}
           </main>
           <Footer />
+          <WhatsAppButton />
         </NextIntlClientProvider>
       </body>
     </html>

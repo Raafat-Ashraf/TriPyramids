@@ -17,6 +17,10 @@
       "openMenu": "Open menu",
       "closeMenu": "Close menu"
     },
+    "whatsapp": {
+      "label": "Chat with us",
+      "message": "Hi TriPyramids, I'd like to know more about your trips."
+    },
     "footer": {
       "blurb": "Curated Pharaonic journeys across the land of the Nile — from the Giza plateau to the temples of the south, guided by people who love this country.",
       "explore": "Explore",
@@ -29,10 +33,9 @@
     }
   },
   "hero": {
-    "titleLine1": "We don't just sell trips.",
-    "titleLine2": "We build memories that rise.",
+    "titleLine1": "Seven thousand years",
+    "titleLine2": "are waiting for your first step.",
     "ctaPrimary": "Explore Trips",
-    "ctaSecondary": "Talk to an Advisor",
     "scrollHint": "Scroll",
     "sceneLabel": "An animated scene of the three Giza pyramids rising tier by tier",
     "sceneCaption": "Watch the pyramids rise",
