@@ -4,9 +4,10 @@ import { MapPin, Clock, ArrowUpRight } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 import type { Trip } from '@/lib/types';
-import { firstTripImage } from '@/lib/trip-images';
+import { parseTripImages } from '@/lib/trip-images';
 import { SunDisk } from '@/components/Glyphs';
 import { BookButton } from './BookButton';
+import { TripCardImages } from './TripCardImages';
 
 export function TripCard({ trip }: { trip: Trip }) {
   const locale = useLocale() as Locale;
@@ -15,7 +16,7 @@ export function TripCard({ trip }: { trip: Trip }) {
   const title = locale === 'ar' ? trip.title_ar : trip.title_en;
   const description =
     (locale === 'ar' ? trip.description_ar : trip.description_en) ?? '';
-  const cover = firstTripImage(trip.image_url);
+  const images = parseTripImages(trip.image_url);
 
   return (
     // A plain container, not a link: the card holds two separate actions — the
@@ -26,22 +27,16 @@ export function TripCard({ trip }: { trip: Trip }) {
         href={`/trips/${trip.id}`}
         className="flex flex-1 flex-col rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pharaoh-gold focus-visible:ring-offset-2 focus-visible:ring-offset-pharaoh-black"
       >
-        {/* Image */}
+        {/* Image — auto-cycles through the trip's photos when there's more than one */}
         <div className="relative aspect-[16/10] overflow-hidden bg-pharaoh-black">
-          {cover ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={cover}
-              alt={title}
-              loading="lazy"
-              className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+          {images.length > 0 ? (
+            <TripCardImages images={images} alt={title} />
           ) : (
             <div className="flex size-full items-center justify-center bg-gradient-to-br from-pharaoh-goldDark/30 via-pharaoh-black to-pharaoh-black">
               <SunDisk size={56} className="text-pharaoh-gold/40" />
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-pharaoh-black/70 via-transparent to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-pharaoh-black/70 via-transparent to-transparent" />
           {trip.duration_days != null && (
             <span className="absolute bottom-3 start-3 inline-flex items-center gap-1.5 rounded-full bg-pharaoh-black/80 px-3 py-1 text-xs font-medium text-pharaoh-cream backdrop-blur-sm">
               <Clock className="size-3.5 text-pharaoh-gold" />
