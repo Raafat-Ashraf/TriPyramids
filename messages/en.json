@@ -1,0 +1,164 @@
+{
+  "common": {
+    "brandName": "TriPyramids",
+    "tagline": "Travel . Explore . Experience Egypt",
+    "nav": {
+      "home": "Home",
+      "trips": "Trips",
+      "reviews": "Reviews",
+      "contact": "Contact"
+    },
+    "language": "Language",
+    "switchToArabic": "العربية",
+    "switchToEnglish": "English",
+    "footer": {
+      "blurb": "Curated Pharaonic journeys across the land of the Nile — from the Giza plateau to the temples of the south, guided by people who love this country.",
+      "explore": "Explore",
+      "contact": "Contact",
+      "email": "hello@tripyramids.com",
+      "phone": "+20 100 000 0000",
+      "address": "Giza Plateau Road, Giza, Egypt",
+      "rights": "All rights reserved.",
+      "madeWith": "Crafted for travelers who want more than a photo."
+    }
+  },
+  "hero": {
+    "titleLine1": "We don't just sell trips.",
+    "titleLine2": "We build memories that rise.",
+    "ctaPrimary": "Explore Trips",
+    "ctaSecondary": "Talk to an Advisor",
+    "scrollHint": "Scroll",
+    "sceneLabel": "An animated scene of the three Giza pyramids rising tier by tier",
+    "sceneCaption": "Watch the pyramids rise",
+    "stats": {
+      "destinations": "Destinations",
+      "travelers": "Travelers",
+      "years": "Years"
+    }
+  },
+  "trips": {
+    "sectionEyebrow": "Signature journeys",
+    "sectionTitle": "Trips carved for the curious",
+    "sectionSubtitle": "Hand-built itineraries across Egypt — pyramids, temples, deserts and the Nile.",
+    "empty": "New journeys are being prepared. Please check back soon.",
+    "priceFrom": "From",
+    "perTrip": "per person",
+    "durationDays": "{count, plural, one {# day} other {# days}}",
+    "viewTrip": "View journey",
+    "locationLabel": "Location",
+    "detail": {
+      "overview": "Overview",
+      "back": "Back to all trips",
+      "reviewsTitle": "What travelers say",
+      "noReviews": "No reviews yet for this journey. Be the first to share your experience.",
+      "durationLabel": "Duration",
+      "priceLabel": "Price"
+    }
+  },
+  "reviews": {
+    "sectionEyebrow": "Traveler voices",
+    "sectionTitle": "Stories from the road",
+    "sectionSubtitle": "Real words from travelers who explored Egypt with us.",
+    "empty": "Approved reviews will appear here soon.",
+    "anonymousTrip": "General review",
+    "ratingOutOf": "{count} out of 5",
+    "form": {
+      "title": "Share your experience",
+      "subtitle": "Your review is read by our team before it appears on the site.",
+      "name": "Your name",
+      "namePlaceholder": "e.g. Sarah M.",
+      "email": "Email",
+      "emailOptional": "optional — never shown publicly",
+      "rating": "Your rating",
+      "comment": "Your review",
+      "commentPlaceholder": "Tell other travelers about your journey…",
+      "submit": "Submit review",
+      "submitting": "Submitting…",
+      "success": "Thank you! Your review is awaiting approval and will appear once our team has reviewed it.",
+      "errorValidation": "Please add your name, a rating and a comment.",
+      "errorRate": "You've submitted a few reviews recently. Please try again a little later.",
+      "errorGeneric": "Something went wrong. Please try again."
+    }
+  },
+  "dashboard": {
+    "brand": "TriPyramids Admin",
+    "login": {
+      "title": "Admin access",
+      "subtitle": "Enter the shared admin password to continue.",
+      "password": "Password",
+      "passwordPlaceholder": "Admin password",
+      "submit": "Sign in",
+      "signingIn": "Signing in…",
+      "error": "Incorrect password. Please try again."
+    },
+    "nav": {
+      "trips": "Trips",
+      "reviews": "Reviews",
+      "viewSite": "View site",
+      "logout": "Log out"
+    },
+    "trips": {
+      "title": "Trips management",
+      "subtitle": "Create, edit and remove the journeys shown on the public site.",
+      "newButton": "New trip",
+      "newTitle": "Add a new trip",
+      "editTitle": "Edit trip",
+      "empty": "No trips yet. Create your first journey.",
+      "count": "{count, plural, one {# trip} other {# trips}}",
+      "durationShort": "{count, plural, one {# day} other {# days}}",
+      "fields": {
+        "titleEn": "Title (English)",
+        "titleAr": "Title (Arabic)",
+        "descEn": "Description (English)",
+        "descAr": "Description (Arabic)",
+        "location": "Location",
+        "price": "Price (USD)",
+        "duration": "Duration (days)",
+        "imageUrl": "Image URL",
+        "imageHint": "Paste a link to a hosted image. Storage upload can be added later."
+      },
+      "save": "Save trip",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirmDelete": "Delete this trip? This cannot be undone.",
+      "table": {
+        "trip": "Trip",
+        "location": "Location",
+        "price": "Price",
+        "duration": "Duration",
+        "actions": "Actions"
+      }
+    },
+    "reviews": {
+      "title": "Reviews moderation",
+      "subtitle": "Approve, reject or remove traveler reviews. Pending reviews are shown first.",
+      "empty": "No reviews to moderate yet.",
+      "generalTrip": "General review",
+      "filter": {
+        "all": "All",
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      },
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      },
+      "approve": "Approve",
+      "reject": "Reject",
+      "delete": "Delete",
+      "confirmDelete": "Delete this review permanently?",
+      "table": {
+        "review": "Review",
+        "trip": "Trip",
+        "rating": "Rating",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+      }
+    }
+  }
+}
