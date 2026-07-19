@@ -38,6 +38,26 @@ server‑side with the service‑role key, which bypasses RLS. The `schema.sql`
 file is kept in the repo for documentation/version control only; **do not
 re‑run it**.
 
+### ⚠️ Required one‑time step: table GRANTs
+
+The tables have RLS enabled and the policies active, but the underlying **table
+GRANTs to the API roles were missing**, so every request failed with
+`42501 permission denied for table …` (blank trips/reviews, review form errors,
+admin writes failing). An RLS policy only decides *which rows* a role sees — the
+role still needs a base GRANT to touch the table at all.
+
+Run [`supabase/grants.sql`](./supabase/grants.sql) **once** in the Supabase SQL
+editor. After that the whole data layer works.
+
+### Seed sample content
+
+Once the grants are in place, populate the site with 6 sample trips and 4
+approved reviews:
+
+```bash
+npm run seed
+```
+
 ---
 
 ## Environment variables

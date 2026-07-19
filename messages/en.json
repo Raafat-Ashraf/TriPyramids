@@ -11,6 +11,12 @@
     "language": "Language",
     "switchToArabic": "العربية",
     "switchToEnglish": "English",
+    "a11y": {
+      "skipToContent": "Skip to content",
+      "mainNav": "Main navigation",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu"
+    },
     "footer": {
       "blurb": "Curated Pharaonic journeys across the land of the Nile — from the Giza plateau to the temples of the south, guided by people who love this country.",
       "explore": "Explore",
@@ -40,7 +46,8 @@
     "sectionEyebrow": "Signature journeys",
     "sectionTitle": "Trips carved for the curious",
     "sectionSubtitle": "Hand-built itineraries across Egypt — pyramids, temples, deserts and the Nile.",
-    "empty": "New journeys are being prepared. Please check back soon.",
+    "emptyTitle": "New journeys are on the way",
+    "empty": "We're preparing the next set of hand-built itineraries. Tell us where you'd like to explore and we'll craft something for you.",
     "priceFrom": "From",
     "perTrip": "per person",
     "durationDays": "{count, plural, one {# day} other {# days}}",
@@ -59,7 +66,8 @@
     "sectionEyebrow": "Traveler voices",
     "sectionTitle": "Stories from the road",
     "sectionSubtitle": "Real words from travelers who explored Egypt with us.",
-    "empty": "Approved reviews will appear here soon.",
+    "emptyTitle": "No stories yet",
+    "empty": "Approved traveler reviews will appear here. Be the first to share your journey with us.",
     "anonymousTrip": "General review",
     "ratingOutOf": "{count} out of 5",
     "form": {

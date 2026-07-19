@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useRef } from 'react';
-import { useTranslations } from 'next-intl';
 import gsap from 'gsap';
 
 /**
@@ -205,7 +204,6 @@ function Pyramid(cfg: PyramidConfig) {
 }
 
 export function PyramidScene({ className }: { className?: string }) {
-  const t = useTranslations('hero');
   const rootRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -365,8 +363,8 @@ export function PyramidScene({ className }: { className?: string }) {
       ref={rootRef}
       viewBox={`0 0 ${VW} ${VH}`}
       className={className}
-      role="img"
-      aria-label={t('sceneLabel')}
+      aria-hidden="true"
+      focusable="false"
       preserveAspectRatio="xMidYMax meet"
     >
       <defs>
@@ -406,12 +404,12 @@ export function PyramidScene({ className }: { className?: string }) {
         </filter>
       </defs>
 
-      {/* ── Horizon sun glow, low behind the pyramids ── */}
+      {/* ── Horizon sun glow, low behind the pyramids (never reaches the UI) ── */}
       <circle
         className="scene-sun"
         cx={780}
-        cy={FAR_GROUND - 26}
-        r={230}
+        cy={FAR_GROUND - 16}
+        r={150}
         fill="url(#tp-sun-glow)"
       />
 

@@ -32,7 +32,7 @@ export function Footer() {
               width={64}
               height={64}
             />
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-pharaoh-cream/60">
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-pharaoh-cream/75">
               {t('footer.blurb')}
             </p>
             <p className="mt-4 text-xs uppercase tracking-[0.24em] text-pharaoh-gold/80">
@@ -92,7 +92,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-pharaoh-gold/12 pt-6 text-xs text-pharaoh-cream/45 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-pharaoh-gold/12 pt-6 text-xs text-pharaoh-cream/60 sm:flex-row">
           <p>
             © {year} {t('brandName')}. {t('footer.rights')}
           </p>

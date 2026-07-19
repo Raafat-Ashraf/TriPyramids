@@ -25,15 +25,26 @@ export function LocaleSwitcher({ className }: { className?: string }) {
   return (
     <div
       className={cn('flex items-center gap-1', className)}
+      role="group"
       aria-label={t('language')}
     >
-      <Link href={pathname} locale="ar" className={linkClass(locale === 'ar')}>
+      <Link
+        href={pathname}
+        locale="ar"
+        aria-current={locale === 'ar' ? 'true' : undefined}
+        className={linkClass(locale === 'ar')}
+      >
         {t('switchToArabic')}
       </Link>
       <span aria-hidden="true" className="text-pharaoh-cream/25">
         /
       </span>
-      <Link href={pathname} locale="en" className={linkClass(locale === 'en')}>
+      <Link
+        href={pathname}
+        locale="en"
+        aria-current={locale === 'en' ? 'true' : undefined}
+        className={linkClass(locale === 'en')}
+      >
         {t('switchToEnglish')}
       </Link>
     </div>

@@ -10,22 +10,26 @@ const base =
   'group/btn relative inline-flex items-center justify-center gap-2 rounded-full font-semibold ' +
   'whitespace-nowrap overflow-hidden transition-all duration-300 gpu ' +
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pharaoh-gold focus-visible:ring-offset-2 ' +
-  'focus-visible:ring-offset-pharaoh-black disabled:pointer-events-none disabled:opacity-50';
+  'focus-visible:ring-offset-pharaoh-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
 
 const variants: Record<Variant, string> = {
-  // Solid brand gold with black text — the logo's monogram, made a button.
+  // Solid brand gold, black text. Brightens + glows on hover, presses on active.
   primary:
-    'bg-gold-gradient text-pharaoh-black shadow-gold hover:-translate-y-0.5 ' +
-    'hover:shadow-gold-lg active:translate-y-0',
-  // Outlined secondary with a dark backing so it reads on bright photo areas.
+    'bg-gold-gradient text-pharaoh-black shadow-gold ' +
+    'hover:-translate-y-0.5 hover:shadow-gold-lg hover:brightness-[1.08] ' +
+    'active:translate-y-0 active:scale-[0.98] active:brightness-100',
+  // Secondary: transparent with a gold border, fills faintly on hover. A dark
+  // backing keeps it legible on bright photo areas.
   onDark:
-    'border border-pharaoh-cream/35 bg-pharaoh-black/40 text-pharaoh-cream backdrop-blur-md ' +
-    'hover:border-pharaoh-gold hover:bg-pharaoh-gold/20 hover:-translate-y-0.5 active:translate-y-0',
+    'border border-pharaoh-gold/55 bg-pharaoh-black/40 text-pharaoh-cream backdrop-blur-md ' +
+    'hover:border-pharaoh-gold hover:bg-pharaoh-gold/15 hover:-translate-y-0.5 hover:text-white ' +
+    'active:translate-y-0 active:scale-[0.98]',
   // Gold outline for use on light sand sections.
   outline:
-    'border border-pharaoh-goldDark/40 bg-transparent text-pharaoh-goldDark ' +
-    'hover:border-pharaoh-gold hover:bg-pharaoh-gold/10 hover:-translate-y-0.5 active:translate-y-0',
-  ghost: 'bg-transparent text-pharaoh-cream hover:bg-pharaoh-gold/10',
+    'border border-pharaoh-goldDark/45 bg-transparent text-pharaoh-goldDark ' +
+    'hover:border-pharaoh-gold hover:bg-pharaoh-gold/10 hover:-translate-y-0.5 ' +
+    'active:translate-y-0 active:scale-[0.98]',
+  ghost: 'bg-transparent text-pharaoh-cream hover:bg-pharaoh-gold/10 active:scale-[0.98]',
 };
 
 const sizes: Record<Size, string> = {

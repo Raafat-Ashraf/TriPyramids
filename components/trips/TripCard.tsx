@@ -18,7 +18,7 @@ export function TripCard({ trip }: { trip: Trip }) {
   return (
     <Link
       href={`/trips/${trip.id}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-pharaoh-gold/15 bg-gradient-to-b from-pharaoh-gold/[0.06] to-transparent transition-all duration-300 hover:-translate-y-1 hover:border-pharaoh-gold/45 hover:shadow-gold"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-pharaoh-gold/15 bg-gradient-to-b from-pharaoh-gold/[0.06] to-transparent transition-all duration-300 hover:-translate-y-1.5 hover:border-pharaoh-gold/50 hover:shadow-gold-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pharaoh-gold focus-visible:ring-offset-2 focus-visible:ring-offset-pharaoh-black"
     >
       {/* Image */}
       <div className="relative aspect-[16/10] overflow-hidden bg-pharaoh-black">
@@ -56,12 +56,12 @@ export function TripCard({ trip }: { trip: Trip }) {
           {title}
         </h3>
         {description && (
-          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-pharaoh-cream/60">
+          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-pharaoh-cream/70">
             {description}
           </p>
         )}
 
-        <div className="mt-4 flex items-end justify-between border-t border-pharaoh-gold/10 pt-4">
+        <div className="mt-auto flex items-end justify-between gap-3 border-t border-pharaoh-gold/10 pt-4">
           {trip.price != null ? (
             <div>
               <span className="block text-[0.7rem] uppercase tracking-wider text-pharaoh-cream/45">

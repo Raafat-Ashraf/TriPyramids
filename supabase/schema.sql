@@ -45,3 +45,7 @@ create policy "public read approved reviews" on reviews
 
 -- There are deliberately NO update/delete policies. The admin dashboard performs
 -- those server-side with SUPABASE_SERVICE_ROLE_KEY, which bypasses RLS entirely.
+
+-- IMPORTANT: RLS policies require underlying table GRANTs to the API roles, or
+-- every request fails with 42501 "permission denied for table". See grants.sql
+-- and run it once in the Supabase SQL editor.

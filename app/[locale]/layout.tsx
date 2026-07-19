@@ -37,6 +37,7 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
+  const t = await getTranslations({ locale, namespace: 'common.a11y' });
   const isArabic = locale === 'ar';
   const dir = isArabic ? 'rtl' : 'ltr';
   const sansClass = isArabic ? cairo.variable : poppins.variable;
@@ -45,8 +46,16 @@ export default async function LocaleLayout({
     <html lang={locale} dir={dir} className={`${sansClass} ${playfair.variable}`}>
       <body className="flex min-h-dvh flex-col bg-pharaoh-black">
         <NextIntlClientProvider messages={messages}>
+          <a
+            href="#main-content"
+            className="sr-only z-[100] rounded-full bg-pharaoh-gold px-5 py-2.5 font-semibold text-pharaoh-black focus:not-sr-only focus:fixed focus:start-4 focus:top-4"
+          >
+            {t('skipToContent')}
+          </a>
           <Header />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
           <Footer />
         </NextIntlClientProvider>
       </body>
