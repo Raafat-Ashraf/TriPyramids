@@ -78,7 +78,7 @@ export function Hero() {
             frame of the same scene (Khafre, Menkaure and the Sphinx), and wide
             screens keep the full vista. */}
         <Image
-          src="/hero-bg-mobile.jpg"
+          src="/hero-giza-mobile.jpg"
           alt=""
           fill
           priority
@@ -87,7 +87,7 @@ export function Hero() {
           className="object-cover object-[center_35%] sm:hidden"
         />
         <Image
-          src="/hero-bg.jpg"
+          src="/hero-giza.jpg"
           alt=""
           fill
           priority
@@ -95,9 +95,10 @@ export function Hero() {
           sizes="100vw"
           className="hidden object-cover object-[center_38%] sm:block"
         />
-        {/* The mid-tones of the photo are bright sky, which the stat row sits
-            over on mobile — hold a little more density there at small sizes. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-pharaoh-black/65 via-pharaoh-black/25 to-pharaoh-black/55 sm:from-pharaoh-black/55 sm:via-transparent sm:to-pharaoh-black/45" />
+        {/* The photograph is already a dark black-and-gold frame, so this only
+            needs to seat the header and the scene — not rescue contrast. Keeping
+            it light preserves the sunset. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-pharaoh-black/55 via-transparent to-pharaoh-black/40 sm:from-pharaoh-black/45 sm:to-pharaoh-black/30" />
       </motion.div>
 
       {/* Plane 2 — the animated pyramid scene, above the overlay so it reads
@@ -126,7 +127,7 @@ export function Hero() {
                 of the photo. */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-[1] rounded-[3rem] bg-pharaoh-black/55 blur-2xl sm:-inset-x-10 sm:-inset-y-12 sm:bg-pharaoh-black/38 sm:blur-3xl"
+              className="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-[1] rounded-[3rem] bg-pharaoh-black/40 blur-2xl sm:-inset-x-10 sm:-inset-y-12 sm:bg-pharaoh-black/28 sm:blur-3xl"
             />
 
             <h1 className="font-display text-[1.75rem] font-extrabold leading-[1.12] text-pharaoh-cream drop-shadow-[0_2px_20px_rgba(0,0,0,0.7)] sm:text-5xl lg:text-6xl">
