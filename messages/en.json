@@ -60,6 +60,7 @@
     "locationLabel": "Location",
     "detail": {
       "overview": "Overview",
+      "gallery": "Photos",
       "back": "Back to all trips",
       "reviewsTitle": "What travelers say",
       "noReviews": "No reviews yet for this journey. Be the first to share your experience.",
@@ -127,8 +128,10 @@
         "location": "Location",
         "price": "Price (USD)",
         "duration": "Duration (days)",
-        "imageUrl": "Image URL",
-        "imageHint": "Paste a link to a hosted image. Storage upload can be added later."
+        "images": "Photos",
+        "addImages": "Add",
+        "removeImage": "Remove image",
+        "imagesHint": "Upload one or more photos from your device (up to 8). The first photo is used as the cover."
       },
       "save": "Save trip",
       "saving": "Saving…",
@@ -145,8 +148,8 @@
       }
     },
     "reviews": {
-      "title": "Reviews moderation",
-      "subtitle": "Approve, reject or remove traveler reviews. Pending reviews are shown first.",
+      "title": "Reviews",
+      "subtitle": "Browse the traveler reviews and remove any that aren't appropriate.",
       "empty": "No reviews to moderate yet.",
       "generalTrip": "General review",
       "filter": {

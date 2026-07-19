@@ -8,6 +8,7 @@ import { Plus, Pencil, Trash2, MapPin } from 'lucide-react';
 import { deleteTrip } from '@/app/actions/admin-trips';
 import type { Locale } from '@/i18n/routing';
 import type { Trip } from '@/lib/types';
+import { firstTripImage } from '@/lib/trip-images';
 import { Button } from '@/components/ui/Button';
 import { TripForm } from './TripForm';
 
@@ -81,10 +82,10 @@ export function TripsManager({ trips }: { trips: Trip[] }) {
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-3">
                         <span className="size-10 shrink-0 overflow-hidden rounded-lg bg-pharaoh-black">
-                          {trip.image_url ? (
+                          {firstTripImage(trip.image_url) ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
-                              src={trip.image_url}
+                              src={firstTripImage(trip.image_url) ?? undefined}
                               alt=""
                               className="size-full object-cover"
                             />

@@ -4,10 +4,12 @@ import { ArrowLeft, MapPin, Clock } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 import type { Review, Trip } from '@/lib/types';
+import { parseTripImages } from '@/lib/trip-images';
 import { GlyphDivider, SunDisk } from '@/components/Glyphs';
 import { ReviewCard } from '@/components/reviews/ReviewCard';
 import { ReviewForm } from '@/components/reviews/ReviewForm';
 import { BookButton } from './BookButton';
+import { TripGallery } from './TripGallery';
 
 export function TripDetail({
   trip,
@@ -23,6 +25,8 @@ export function TripDetail({
   const title = locale === 'ar' ? trip.title_ar : trip.title_en;
   const description =
     (locale === 'ar' ? trip.description_ar : trip.description_en) ?? '';
+  const images = parseTripImages(trip.image_url);
+  const cover = images[0];
 
   return (
     <div className="bg-pharaoh-black pt-[var(--header-height)]">
@@ -32,10 +36,10 @@ export function TripDetail({
           viewport width, so the title wraps and RTL aligns correctly. */}
       <div className="relative">
         <div className="relative h-[44vh] min-h-[300px] w-full overflow-hidden sm:h-[52vh]">
-          {trip.image_url ? (
+          {cover ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={trip.image_url}
+              src={cover}
               alt={title}
               className="absolute inset-0 h-full w-full object-cover"
             />
@@ -78,6 +82,16 @@ export function TripDetail({
           </div>
         </div>
       </div>
+
+      {/* Photo gallery — only when there's more than the cover image */}
+      {images.length > 1 && (
+        <section className="shell pt-10">
+          <h2 className="mb-5 font-display text-2xl font-bold text-pharaoh-gold">
+            {tr('gallery')}
+          </h2>
+          <TripGallery images={images} title={title} />
+        </section>
+      )}
 
       {/* Overview */}
       {description && (

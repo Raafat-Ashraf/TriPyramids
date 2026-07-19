@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useTransition } from 'react';
+import { useMemo, useTransition } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Trash2 } from 'lucide-react';
@@ -12,14 +12,8 @@ import { formatDate } from '@/lib/format';
 import { StarRating } from '@/components/ui/StarRating';
 import { cn } from '@/lib/utils';
 
-type Filter = 'all' | ReviewStatus;
-const FILTERS: Filter[] = ['all', 'pending', 'approved', 'rejected'];
-const STATUS_ORDER: Record<ReviewStatus, number> = {
-  pending: 0,
-  approved: 1,
-  rejected: 2,
-};
-
+// New reviews are always 'approved', but legacy rows may still carry other
+// statuses — a badge is shown only when a review isn't approved.
 const STATUS_STYLES: Record<ReviewStatus, string> = {
   pending: 'border-pharaoh-gold/40 bg-pharaoh-gold/15 text-pharaoh-gold',
   approved: 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300',
@@ -31,29 +25,11 @@ export function ReviewsManager({ reviews }: { reviews: ReviewWithTrip[] }) {
   const locale = useLocale() as Locale;
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const [filter, setFilter] = useState<Filter>('all');
 
-  // Pending first, then approved, then rejected; newest first within a group.
-  const sorted = useMemo(() => {
-    const list =
-      filter === 'all' ? reviews : reviews.filter((r) => r.status === filter);
-    return [...list].sort((a, b) => {
-      const byStatus = STATUS_ORDER[a.status] - STATUS_ORDER[b.status];
-      if (byStatus !== 0) return byStatus;
-      return b.created_at.localeCompare(a.created_at);
-    });
-  }, [reviews, filter]);
-
-  const counts = useMemo(() => {
-    const base: Record<Filter, number> = {
-      all: reviews.length,
-      pending: 0,
-      approved: 0,
-      rejected: 0,
-    };
-    for (const review of reviews) base[review.status] += 1;
-    return base;
-  }, [reviews]);
+  const sorted = useMemo(
+    () => [...reviews].sort((a, b) => b.created_at.localeCompare(a.created_at)),
+    [reviews],
+  );
 
   function runAction(action: () => Promise<unknown>) {
     startTransition(async () => {
@@ -76,26 +52,6 @@ export function ReviewsManager({ reviews }: { reviews: ReviewWithTrip[] }) {
       </h1>
       <p className="mt-1.5 text-sm text-pharaoh-cream/55">{t('subtitle')}</p>
 
-      {/* Filter tabs */}
-      <div className="mt-6 flex flex-wrap gap-2">
-        {FILTERS.map((value) => (
-          <button
-            key={value}
-            type="button"
-            onClick={() => setFilter(value)}
-            className={cn(
-              'rounded-full border px-4 py-1.5 text-sm font-medium transition-colors',
-              filter === value
-                ? 'border-pharaoh-gold bg-pharaoh-gold/15 text-pharaoh-gold'
-                : 'border-pharaoh-gold/20 text-pharaoh-cream/65 hover:border-pharaoh-gold/50 hover:text-pharaoh-cream',
-            )}
-          >
-            {t(`filter.${value}`)}
-            <span className="ms-2 text-xs text-pharaoh-cream/45">{counts[value]}</span>
-          </button>
-        ))}
-      </div>
-
       <div className="mt-6 space-y-3">
         {sorted.length === 0 ? (
           <p className="rounded-2xl border border-dashed border-pharaoh-gold/20 py-16 text-center text-pharaoh-cream/50">
@@ -111,12 +67,7 @@ export function ReviewsManager({ reviews }: { reviews: ReviewWithTrip[] }) {
             return (
               <article
                 key={review.id}
-                className={cn(
-                  'rounded-2xl border bg-pharaoh-black/40 p-5 transition-colors',
-                  review.status === 'pending'
-                    ? 'border-pharaoh-gold/35 bg-pharaoh-gold/[0.05]'
-                    : 'border-pharaoh-gold/12',
-                )}
+                className="rounded-2xl border border-pharaoh-gold/12 bg-pharaoh-black/40 p-5 transition-colors"
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
@@ -125,14 +76,16 @@ export function ReviewsManager({ reviews }: { reviews: ReviewWithTrip[] }) {
                         {review.name}
                       </span>
                       <StarRating value={review.rating} size={15} />
-                      <span
-                        className={cn(
-                          'rounded-full border px-2.5 py-0.5 text-xs font-medium',
-                          STATUS_STYLES[review.status],
-                        )}
-                      >
-                        {t(`status.${review.status}`)}
-                      </span>
+                      {review.status !== 'approved' && (
+                        <span
+                          className={cn(
+                            'rounded-full border px-2.5 py-0.5 text-xs font-medium',
+                            STATUS_STYLES[review.status],
+                          )}
+                        >
+                          {t(`status.${review.status}`)}
+                        </span>
+                      )}
                     </div>
                     <p className="mt-1 text-xs text-pharaoh-cream/45">
                       <span className="text-pharaoh-gold/70">{tripTitle}</span>

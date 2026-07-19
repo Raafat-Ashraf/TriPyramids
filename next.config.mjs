@@ -10,6 +10,11 @@ const nextConfig = {
     // ESLint config should never fail a production build.
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    // Trip images are uploaded through a Server Action, so raise the request
+    // body limit above the 1MB default to fit several phone photos.
+    serverActions: { bodySizeLimit: '25mb' },
+  },
   images: {
     // Trip images are arbitrary owner-provided URLs entered in the dashboard,
     // so we can't enumerate hosts up front. Cards use plain <img>, but keep

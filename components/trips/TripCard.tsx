@@ -4,6 +4,7 @@ import { MapPin, Clock, ArrowUpRight } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 import type { Trip } from '@/lib/types';
+import { firstTripImage } from '@/lib/trip-images';
 import { SunDisk } from '@/components/Glyphs';
 import { BookButton } from './BookButton';
 
@@ -14,6 +15,7 @@ export function TripCard({ trip }: { trip: Trip }) {
   const title = locale === 'ar' ? trip.title_ar : trip.title_en;
   const description =
     (locale === 'ar' ? trip.description_ar : trip.description_en) ?? '';
+  const cover = firstTripImage(trip.image_url);
 
   return (
     // A plain container, not a link: the card holds two separate actions — the
@@ -26,10 +28,10 @@ export function TripCard({ trip }: { trip: Trip }) {
       >
         {/* Image */}
         <div className="relative aspect-[16/10] overflow-hidden bg-pharaoh-black">
-          {trip.image_url ? (
+          {cover ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={trip.image_url}
+              src={cover}
               alt={title}
               loading="lazy"
               className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
