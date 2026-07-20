@@ -79,8 +79,10 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <LocaleSwitcher className="hidden sm:flex" />
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Always visible, including on mobile — a compact dropdown, so it
+              no longer needs to hide behind the hamburger menu. */}
+          <LocaleSwitcher />
           <button
             type="button"
             className="rounded-md p-2 text-pharaoh-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pharaoh-gold md:hidden"
@@ -113,9 +115,6 @@ export function Header() {
               {t(`nav.${item.key}`)}
             </Link>
           ))}
-          <div className="mt-2 px-2">
-            <LocaleSwitcher />
-          </div>
         </nav>
       </div>
     </header>
