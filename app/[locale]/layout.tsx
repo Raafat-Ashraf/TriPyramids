@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 
 import { routing } from '@/i18n/routing';
-import { cairo, poppins, playfair } from '@/app/fonts';
+import { cairo, poppins, inter, playfair } from '@/app/fonts';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
@@ -41,7 +41,8 @@ export default async function LocaleLayout({
   const t = await getTranslations({ locale, namespace: 'common.a11y' });
   const isArabic = locale === 'ar';
   const dir = isArabic ? 'rtl' : 'ltr';
-  const sansClass = isArabic ? cairo.variable : poppins.variable;
+  const sansClass =
+    locale === 'ar' ? cairo.variable : locale === 'ru' ? inter.variable : poppins.variable;
 
   return (
     <html lang={locale} dir={dir} className={`${sansClass} ${playfair.variable}`}>

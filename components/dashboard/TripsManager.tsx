@@ -9,6 +9,7 @@ import { deleteTrip } from '@/app/actions/admin-trips';
 import type { Locale } from '@/i18n/routing';
 import type { Trip } from '@/lib/types';
 import { firstTripImage } from '@/lib/trip-images';
+import { getTripTitle } from '@/lib/trip-i18n';
 import { Button } from '@/components/ui/Button';
 import { TripForm } from './TripForm';
 
@@ -97,10 +98,17 @@ export function TripsManager({ trips }: { trips: Trip[] }) {
                         </span>
                         <div className="min-w-0">
                           <p className="truncate font-medium text-pharaoh-cream">
-                            {locale === 'ar' ? trip.title_ar : trip.title_en}
+                            {getTripTitle(trip, locale)}
                           </p>
-                          <p className="truncate text-xs text-pharaoh-cream/45" dir={locale === 'ar' ? 'ltr' : 'rtl'}>
-                            {locale === 'ar' ? trip.title_en : trip.title_ar}
+                          {/* Secondary line: the other required-language title
+                              (Arabic/English are the only two guaranteed
+                              filled), as a quick cross-check regardless of
+                              which of the four dashboard languages is active. */}
+                          <p
+                            className="truncate text-xs text-pharaoh-cream/45"
+                            dir={locale === 'en' ? 'rtl' : 'ltr'}
+                          >
+                            {locale === 'en' ? trip.title_ar : trip.title_en}
                           </p>
                         </div>
                       </div>

@@ -1,7 +1,15 @@
 import type { Locale } from '@/i18n/routing';
 
-function intlLocale(locale: string): string {
-  return locale === 'ar' ? 'ar-EG' : 'en-US';
+const INTL_LOCALES: Record<Locale, string> = {
+  ar: 'ar-EG',
+  en: 'en-US',
+  ru: 'ru-RU',
+  it: 'it-IT',
+};
+
+/** Map a site locale to the BCP-47 tag Intl.* APIs expect. */
+export function intlLocale(locale: string): string {
+  return INTL_LOCALES[locale as Locale] ?? 'en-US';
 }
 
 /**

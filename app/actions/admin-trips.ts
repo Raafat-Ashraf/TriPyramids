@@ -58,7 +58,9 @@ async function uploadImages(
  * Build the row to write. Combines the existing images the admin kept with any
  * newly uploaded files (upload happens here), storing them newline-delimited in
  * `image_url`. Price is intentionally left untouched — it was removed from the
- * product.
+ * product. Only Arabic and English are required; Russian and Italian are
+ * optional (a trip missing them falls back to English on the site — see
+ * lib/trip-i18n.ts).
  */
 async function buildTripValues(formData: FormData, supabase: SupabaseClient) {
   const titleEn = String(formData.get('title_en') ?? '').trim();
@@ -78,8 +80,12 @@ async function buildTripValues(formData: FormData, supabase: SupabaseClient) {
     values: {
       title_en: titleEn,
       title_ar: titleAr,
+      title_ru: optionalText(formData.get('title_ru')),
+      title_it: optionalText(formData.get('title_it')),
       description_en: optionalText(formData.get('description_en')),
       description_ar: optionalText(formData.get('description_ar')),
+      description_ru: optionalText(formData.get('description_ru')),
+      description_it: optionalText(formData.get('description_it')),
       location: optionalText(formData.get('location')),
       duration_days: optionalInt(formData.get('duration_days')),
       image_url: joinTripImages(images),
@@ -91,6 +97,20 @@ function revalidateTrips() {
   revalidatePath('/dashboard');
   revalidatePath('/ar');
   revalidatePath('/en');
+  revalidatePath('/ru');
+  revalidatePath('/it');
+}
+
+/**
+ * The ru/it columns are an optional migration (supabase/add-ru-it-columns.sql).
+ * If it hasn't been run yet, writing to them fails with Postgres's "column
+ * does not exist" — turn that into a hint instead of a cryptic DB error.
+ */
+function friendlyDbError(message: string): string {
+  if (/column .*(title_ru|title_it|description_ru|description_it)/.test(message)) {
+    return 'Russian/Italian trip fields aren’t set up yet — run supabase/add-ru-it-columns.sql in the Supabase SQL editor, or leave those fields blank and save again.';
+  }
+  return message;
 }
 
 export async function createTrip(formData: FormData): Promise<AdminActionResult> {
@@ -106,7 +126,7 @@ export async function createTrip(formData: FormData): Promise<AdminActionResult>
   if ('error' in parsed) return { ok: false, error: parsed.error };
 
   const { error } = await supabase.from('trips').insert(parsed.values);
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: friendlyDbError(error.message) };
 
   revalidateTrips();
   return { ok: true };
@@ -131,7 +151,7 @@ export async function updateTrip(formData: FormData): Promise<AdminActionResult>
     .from('trips')
     .update(parsed.values)
     .eq('id', id);
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: friendlyDbError(error.message) };
 
   revalidateTrips();
   return { ok: true };

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocale } from 'next-intl';
 
 import { cn } from '@/lib/utils';
+import { intlLocale } from '@/lib/format';
 
 interface CounterProps {
   value: number;
@@ -62,14 +63,11 @@ export function Counter({
     const element = ref.current;
     if (!element || !started) return;
 
-    const formatter = new Intl.NumberFormat(
-      locale === 'ar' ? 'ar-EG' : 'en-US',
-      {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals,
-        numberingSystem: 'latn',
-      },
-    );
+    const formatter = new Intl.NumberFormat(intlLocale(locale), {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+      numberingSystem: 'latn',
+    });
 
     let raf = 0;
     let start: number | null = null;
@@ -85,7 +83,7 @@ export function Counter({
     return () => cancelAnimationFrame(raf);
   }, [started, value, decimals, prefix, suffix, duration, locale]);
 
-  const initial = new Intl.NumberFormat(locale === 'ar' ? 'ar-EG' : 'en-US', {
+  const initial = new Intl.NumberFormat(intlLocale(locale), {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
     numberingSystem: 'latn',

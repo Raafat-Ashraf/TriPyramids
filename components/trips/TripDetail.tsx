@@ -5,6 +5,7 @@ import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 import type { Review, Trip } from '@/lib/types';
 import { parseTripImages } from '@/lib/trip-images';
+import { getTripTitle, getTripDescription } from '@/lib/trip-i18n';
 import { GlyphDivider, SunDisk } from '@/components/Glyphs';
 import { ReviewCard } from '@/components/reviews/ReviewCard';
 import { ReviewForm } from '@/components/reviews/ReviewForm';
@@ -22,9 +23,8 @@ export function TripDetail({
   const t = useTranslations('trips');
   const tr = useTranslations('trips.detail');
 
-  const title = locale === 'ar' ? trip.title_ar : trip.title_en;
-  const description =
-    (locale === 'ar' ? trip.description_ar : trip.description_en) ?? '';
+  const title = getTripTitle(trip, locale);
+  const description = getTripDescription(trip, locale);
   const images = parseTripImages(trip.image_url);
   const cover = images[0];
 

@@ -9,6 +9,7 @@ import { createTrip, updateTrip } from '@/app/actions/admin-trips';
 import type { Trip } from '@/lib/types';
 import { parseTripImages } from '@/lib/trip-images';
 import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 
 const MAX_IMAGES = 8;
 
@@ -16,6 +17,44 @@ const field =
   'w-full rounded-lg border border-pharaoh-gold/20 bg-pharaoh-black/60 px-3.5 py-2.5 text-sm text-pharaoh-cream ' +
   'placeholder:text-pharaoh-cream/30 focus:border-pharaoh-gold focus:outline-none';
 const labelClass = 'mb-1.5 block text-sm font-medium text-pharaoh-cream/80';
+
+// Arabic and English are required (the original two-language schema); Russian
+// and Italian are optional add-ons that fall back to English on the site when
+// left blank (see lib/trip-i18n.ts).
+const LANGS = [
+  { code: 'ar', dir: 'rtl', required: true },
+  { code: 'en', dir: 'ltr', required: true },
+  { code: 'ru', dir: 'ltr', required: false },
+  { code: 'it', dir: 'ltr', required: false },
+] as const;
+type LangCode = (typeof LANGS)[number]['code'];
+
+const TITLE_FIELD: Record<LangCode, 'title_ar' | 'title_en' | 'title_ru' | 'title_it'> = {
+  ar: 'title_ar',
+  en: 'title_en',
+  ru: 'title_ru',
+  it: 'title_it',
+};
+const DESC_FIELD: Record<
+  LangCode,
+  'description_ar' | 'description_en' | 'description_ru' | 'description_it'
+> = {
+  ar: 'description_ar',
+  en: 'description_en',
+  ru: 'description_ru',
+  it: 'description_it',
+};
+const NATIVE_LABEL_KEY: Record<LangCode, string> = {
+  ar: 'switchToArabic',
+  en: 'switchToEnglish',
+  ru: 'switchToRussian',
+  it: 'switchToItalian',
+};
+
+/** 'ar' -> 'Ar', matching the `fields.title{Ar,En,Ru,It}` message key suffix. */
+function capitalize(code: string): string {
+  return code.charAt(0).toUpperCase() + code.slice(1);
+}
 
 export function TripForm({
   trip,
@@ -25,9 +64,11 @@ export function TripForm({
   onClose: () => void;
 }) {
   const t = useTranslations('dashboard.trips');
+  const tCommon = useTranslations('common');
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [activeLang, setActiveLang] = useState<LangCode>('ar');
 
   // Images the admin keeps (existing URLs) + newly picked files.
   const [existingImages, setExistingImages] = useState<string[]>(() =>
@@ -84,61 +125,74 @@ export function TripForm({
       <form onSubmit={handleSubmit} className="mt-5 space-y-5">
         {trip && <input type="hidden" name="id" value={trip.id} />}
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label className={labelClass} htmlFor="title_en">
-              {t('fields.titleEn')} <span className="text-pharaoh-gold">*</span>
-            </label>
-            <input
-              id="title_en"
-              name="title_en"
-              required
-              dir="ltr"
-              defaultValue={trip?.title_en ?? ''}
-              className={field}
-            />
-          </div>
-          <div>
-            <label className={labelClass} htmlFor="title_ar">
-              {t('fields.titleAr')} <span className="text-pharaoh-gold">*</span>
-            </label>
-            <input
-              id="title_ar"
-              name="title_ar"
-              required
-              dir="rtl"
-              defaultValue={trip?.title_ar ?? ''}
-              className={field}
-            />
-          </div>
-        </div>
+        <div>
+          <p className="mb-3 text-xs text-pharaoh-cream/45">{t('translationsHint')}</p>
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label className={labelClass} htmlFor="description_en">
-              {t('fields.descEn')}
-            </label>
-            <textarea
-              id="description_en"
-              name="description_en"
-              rows={4}
-              dir="ltr"
-              defaultValue={trip?.description_en ?? ''}
-              className={`${field} resize-y`}
-            />
+          {/* Language tabs. All four panes stay mounted (just hidden) so
+              switching tabs never loses what's been typed in the others. */}
+          <div className="flex flex-wrap gap-1.5 border-b border-pharaoh-gold/15 pb-2">
+            {LANGS.map((lang) => {
+              const hasContent = Boolean(trip?.[TITLE_FIELD[lang.code]]);
+              return (
+                <button
+                  key={lang.code}
+                  type="button"
+                  onClick={() => setActiveLang(lang.code)}
+                  className={cn(
+                    'flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors',
+                    activeLang === lang.code
+                      ? 'bg-pharaoh-gold/15 text-pharaoh-gold'
+                      : 'text-pharaoh-cream/60 hover:text-pharaoh-cream',
+                  )}
+                >
+                  {tCommon(NATIVE_LABEL_KEY[lang.code])}
+                  {lang.required && <span className="text-pharaoh-gold">*</span>}
+                  {!lang.required && hasContent && (
+                    <span
+                      className="size-1.5 rounded-full bg-emerald-400"
+                      aria-hidden="true"
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
-          <div>
-            <label className={labelClass} htmlFor="description_ar">
-              {t('fields.descAr')}
-            </label>
-            <textarea
-              id="description_ar"
-              name="description_ar"
-              rows={4}
-              dir="rtl"
-              defaultValue={trip?.description_ar ?? ''}
-              className={`${field} resize-y`}
-            />
+
+          <div className="mt-4 grid gap-5">
+            {LANGS.map((lang) => (
+              <div
+                key={lang.code}
+                className={cn('grid gap-5', activeLang !== lang.code && 'hidden')}
+              >
+                <div>
+                  <label className={labelClass} htmlFor={`title_${lang.code}`}>
+                    {t(`fields.title${capitalize(lang.code)}`)}{' '}
+                    {lang.required && <span className="text-pharaoh-gold">*</span>}
+                  </label>
+                  <input
+                    id={`title_${lang.code}`}
+                    name={`title_${lang.code}`}
+                    required={lang.required}
+                    dir={lang.dir}
+                    defaultValue={trip?.[TITLE_FIELD[lang.code]] ?? ''}
+                    className={field}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass} htmlFor={`description_${lang.code}`}>
+                    {t(`fields.desc${capitalize(lang.code)}`)}
+                  </label>
+                  <textarea
+                    id={`description_${lang.code}`}
+                    name={`description_${lang.code}`}
+                    rows={4}
+                    dir={lang.dir}
+                    defaultValue={trip?.[DESC_FIELD[lang.code]] ?? ''}
+                    className={`${field} resize-y`}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

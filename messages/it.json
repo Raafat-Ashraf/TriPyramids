@@ -1,0 +1,187 @@
+{
+  "common": {
+    "brandName": "TriPyramids",
+    "tagline": "Viaggia . Esplora . Vivi l'Egitto",
+    "nav": {
+      "home": "Home",
+      "trips": "Viaggi",
+      "reviews": "Recensioni",
+      "contact": "Contatti"
+    },
+    "language": "Lingua",
+    "switchToArabic": "العربية",
+    "switchToEnglish": "English",
+    "switchToRussian": "Русский",
+    "switchToItalian": "Italiano",
+    "a11y": {
+      "skipToContent": "Vai al contenuto",
+      "mainNav": "Navigazione principale",
+      "openMenu": "Apri il menu",
+      "closeMenu": "Chiudi il menu"
+    },
+    "whatsapp": {
+      "label": "Scrivici",
+      "message": "Ciao TriPyramids, vorrei saperne di più sui vostri viaggi.",
+      "bookMessage": "Ciao TriPyramids, vorrei prenotare questo viaggio: {trip}."
+    },
+    "footer": {
+      "blurb": "Viaggi faraonici curati nei minimi dettagli lungo la terra del Nilo — dall'altopiano di Giza ai templi del sud, accompagnati da chi ama davvero questo paese.",
+      "explore": "Esplora",
+      "contact": "Contatti",
+      "email": "hello@tripyramids.com",
+      "phone": "+20 100 000 0000",
+      "address": "Giza Plateau Road, Giza, Egitto",
+      "rights": "Tutti i diritti riservati.",
+      "madeWith": "Pensato per viaggiatori che vogliono più di una semplice foto."
+    }
+  },
+  "hero": {
+    "titleLine1": "Settemila anni",
+    "titleLine2": "aspettano il tuo primo passo.",
+    "ctaPrimary": "Scopri i viaggi",
+    "scrollHint": "Scorri",
+    "sceneLabel": "Una scena animata delle tre piramidi di Giza che si innalzano livello dopo livello",
+    "sceneCaption": "Guarda le piramidi innalzarsi",
+    "stats": {
+      "destinations": "Destinazioni",
+      "travelers": "Viaggiatori",
+      "years": "Anni di esperienza"
+    }
+  },
+  "trips": {
+    "sectionEyebrow": "Viaggi esclusivi",
+    "sectionTitle": "Viaggi pensati per i curiosi",
+    "sectionSubtitle": "Itinerari costruiti su misura in tutto l'Egitto — piramidi, templi, deserti e il Nilo.",
+    "emptyTitle": "Nuovi viaggi in arrivo",
+    "empty": "Stiamo preparando una nuova serie di itinerari su misura. Dicci dove vorresti andare e creeremo qualcosa per te.",
+    "priceFrom": "A partire da",
+    "perTrip": "a persona",
+    "durationDays": "{count, plural, one {# giorno} other {# giorni}}",
+    "viewTrip": "Vedi il viaggio",
+    "book": "Prenota ora",
+    "locationLabel": "Posizione",
+    "detail": {
+      "overview": "Panoramica",
+      "gallery": "Foto",
+      "back": "Torna a tutti i viaggi",
+      "reviewsTitle": "Cosa dicono i viaggiatori",
+      "noReviews": "Nessuna recensione ancora per questo viaggio. Sii il primo a condividere la tua esperienza.",
+      "durationLabel": "Durata",
+      "priceLabel": "Prezzo"
+    }
+  },
+  "reviews": {
+    "sectionEyebrow": "Voci di viaggiatori",
+    "sectionTitle": "Storie dalla strada",
+    "sectionSubtitle": "Parole autentiche di viaggiatori che hanno esplorato l'Egitto con noi.",
+    "emptyTitle": "Ancora nessuna storia",
+    "empty": "Le recensioni dei viaggiatori appariranno qui. Sii il primo a condividere il tuo viaggio con noi.",
+    "anonymousTrip": "Recensione generale",
+    "ratingOutOf": "{count} su 5",
+    "form": {
+      "title": "Condividi la tua esperienza",
+      "subtitle": "Condividi la tua esperienza con altri viaggiatori — apparirà subito sul sito.",
+      "name": "Il tuo nome",
+      "namePlaceholder": "es. Sara M.",
+      "email": "Email",
+      "emailOptional": "facoltativo — non mostrato pubblicamente",
+      "rating": "La tua valutazione",
+      "comment": "La tua recensione",
+      "commentPlaceholder": "Racconta agli altri viaggiatori la tua esperienza…",
+      "submit": "Invia recensione",
+      "submitting": "Invio…",
+      "success": "Grazie! La tua recensione è stata pubblicata.",
+      "errorValidation": "Inserisci nome, valutazione e commento.",
+      "errorRate": "Hai inviato diverse recensioni di recente. Riprova tra un po'.",
+      "errorGeneric": "Qualcosa è andato storto. Riprova."
+    }
+  },
+  "dashboard": {
+    "brand": "Admin TriPyramids",
+    "login": {
+      "title": "Accesso amministratore",
+      "subtitle": "Inserisci la password amministrativa condivisa per continuare.",
+      "password": "Password",
+      "passwordPlaceholder": "Password amministratore",
+      "submit": "Accedi",
+      "signingIn": "Accesso…",
+      "error": "Password errata. Riprova."
+    },
+    "nav": {
+      "trips": "Viaggi",
+      "reviews": "Recensioni",
+      "viewSite": "Vedi il sito",
+      "logout": "Esci"
+    },
+    "trips": {
+      "title": "Gestione viaggi",
+      "subtitle": "Crea, modifica e rimuovi i viaggi mostrati sul sito pubblico.",
+      "newButton": "Nuovo viaggio",
+      "newTitle": "Aggiungi un nuovo viaggio",
+      "editTitle": "Modifica viaggio",
+      "empty": "Nessun viaggio ancora. Crea il tuo primo viaggio.",
+      "count": "{count, plural, one {# viaggio} other {# viaggi}}",
+      "durationShort": "{count, plural, one {# giorno} other {# giorni}}",
+      "translationsHint": "Arabo e inglese sono obbligatori. Russo e italiano sono facoltativi — un viaggio non tradotto mostra automaticamente il testo inglese sul sito.",
+      "fields": {
+        "titleEn": "Titolo (inglese)",
+        "titleAr": "Titolo (arabo)",
+        "titleRu": "Titolo (russo)",
+        "titleIt": "Titolo (italiano)",
+        "descEn": "Descrizione (inglese)",
+        "descAr": "Descrizione (arabo)",
+        "descRu": "Descrizione (russo)",
+        "descIt": "Descrizione (italiano)",
+        "location": "Posizione",
+        "price": "Prezzo (USD)",
+        "duration": "Durata (giorni)",
+        "images": "Foto",
+        "addImages": "Aggiungi",
+        "removeImage": "Rimuovi immagine",
+        "imagesHint": "Carica una o più foto dal tuo dispositivo (fino a 8). La prima foto viene usata come copertina."
+      },
+      "save": "Salva viaggio",
+      "saving": "Salvataggio…",
+      "cancel": "Annulla",
+      "edit": "Modifica",
+      "delete": "Elimina",
+      "confirmDelete": "Eliminare questo viaggio? L'operazione non può essere annullata.",
+      "table": {
+        "trip": "Viaggio",
+        "location": "Posizione",
+        "price": "Prezzo",
+        "duration": "Durata",
+        "actions": "Azioni"
+      }
+    },
+    "reviews": {
+      "title": "Recensioni",
+      "subtitle": "Sfoglia le recensioni dei viaggiatori e rimuovi quelle non appropriate.",
+      "empty": "Nessuna recensione da moderare ancora.",
+      "generalTrip": "Recensione generale",
+      "filter": {
+        "all": "Tutte",
+        "pending": "In attesa",
+        "approved": "Approvata",
+        "rejected": "Rifiutata"
+      },
+      "status": {
+        "pending": "In attesa",
+        "approved": "Approvata",
+        "rejected": "Rifiutata"
+      },
+      "approve": "Approva",
+      "reject": "Rifiuta",
+      "delete": "Elimina",
+      "confirmDelete": "Eliminare definitivamente questa recensione?",
+      "table": {
+        "review": "Recensione",
+        "trip": "Viaggio",
+        "rating": "Valutazione",
+        "status": "Stato",
+        "date": "Data",
+        "actions": "Azioni"
+      }
+    }
+  }
+}

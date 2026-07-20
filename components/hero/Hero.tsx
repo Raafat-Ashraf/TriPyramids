@@ -174,7 +174,10 @@ export function Hero() {
                   <dd className="font-display text-2xl font-bold text-pharaoh-gold drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-4xl">
                     <Counter value={stat.value} decimals={stat.decimals} suffix={stat.suffix} />
                   </dd>
-                  <dt className="mt-1 text-[0.65rem] font-medium uppercase tracking-[0.14em] text-pharaoh-cream/80 sm:text-xs">
+                  {/* break-words: longer single-word labels in some locales
+                      (e.g. Russian "путешественников") have no spaces to wrap
+                      at and would otherwise overflow into the next column. */}
+                  <dt className="mt-1 break-words text-[0.65rem] font-medium uppercase tracking-[0.1em] text-pharaoh-cream/80 sm:text-xs sm:tracking-[0.14em]">
                     {t(`stats.${stat.key}`)}
                   </dt>
                 </div>

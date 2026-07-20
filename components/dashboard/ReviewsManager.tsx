@@ -9,6 +9,7 @@ import { deleteReview } from '@/app/actions/admin-reviews';
 import type { Locale } from '@/i18n/routing';
 import type { ReviewStatus, ReviewWithTrip } from '@/lib/types';
 import { formatDate } from '@/lib/format';
+import { getTripTitle } from '@/lib/trip-i18n';
 import { StarRating } from '@/components/ui/StarRating';
 import { cn } from '@/lib/utils';
 
@@ -60,9 +61,7 @@ export function ReviewsManager({ reviews }: { reviews: ReviewWithTrip[] }) {
         ) : (
           sorted.map((review) => {
             const tripTitle = review.trips
-              ? locale === 'ar'
-                ? review.trips.title_ar
-                : review.trips.title_en
+              ? getTripTitle(review.trips, locale)
               : t('generalTrip');
             return (
               <article

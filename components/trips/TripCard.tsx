@@ -5,6 +5,7 @@ import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 import type { Trip } from '@/lib/types';
 import { parseTripImages } from '@/lib/trip-images';
+import { getTripTitle, getTripDescription } from '@/lib/trip-i18n';
 import { SunDisk } from '@/components/Glyphs';
 import { BookButton } from './BookButton';
 import { TripCardImages } from './TripCardImages';
@@ -13,9 +14,8 @@ export function TripCard({ trip }: { trip: Trip }) {
   const locale = useLocale() as Locale;
   const t = useTranslations('trips');
 
-  const title = locale === 'ar' ? trip.title_ar : trip.title_en;
-  const description =
-    (locale === 'ar' ? trip.description_ar : trip.description_en) ?? '';
+  const title = getTripTitle(trip, locale);
+  const description = getTripDescription(trip, locale);
   const images = parseTripImages(trip.image_url);
 
   return (

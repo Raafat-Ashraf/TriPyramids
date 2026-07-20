@@ -2,10 +2,22 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 
-import { cairo, poppins, playfair } from '@/app/fonts';
+import { cairo, poppins, inter, playfair } from '@/app/fonts';
 import arMessages from '@/messages/ar.json';
 import enMessages from '@/messages/en.json';
+import ruMessages from '@/messages/ru.json';
+import itMessages from '@/messages/it.json';
 import '../globals.css';
+
+const DASH_LOCALES = ['ar', 'en', 'ru', 'it'] as const;
+type DashLocale = (typeof DASH_LOCALES)[number];
+
+const DASH_MESSAGES: Record<DashLocale, typeof enMessages> = {
+  ar: arMessages,
+  en: enMessages,
+  ru: ruMessages,
+  it: itMessages,
+};
 
 export const metadata: Metadata = {
   title: 'TriPyramids Admin',
@@ -17,18 +29,21 @@ export const metadata: Metadata = {
  *
  * The dashboard is NOT locale-routed; it keeps its own language in a `dash_locale`
  * cookie (default Arabic) and provides messages directly to next-intl, so the
- * same bilingual dictionaries drive both areas.
+ * same four-language dictionaries (ar/en/ru/it) drive both areas.
  */
 export default function DashboardRootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const dashLocale =
-    cookies().get('dash_locale')?.value === 'en' ? 'en' : 'ar';
+  const cookieLocale = cookies().get('dash_locale')?.value;
+  const dashLocale: DashLocale = DASH_LOCALES.includes(cookieLocale as DashLocale)
+    ? (cookieLocale as DashLocale)
+    : 'ar';
   const isArabic = dashLocale === 'ar';
-  const messages = isArabic ? arMessages : enMessages;
-  const sansClass = isArabic ? cairo.variable : poppins.variable;
+  const messages = DASH_MESSAGES[dashLocale];
+  const sansClass =
+    dashLocale === 'ar' ? cairo.variable : dashLocale === 'ru' ? inter.variable : poppins.variable;
 
   return (
     <html

@@ -3,7 +3,9 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { createPublicClient } from '@/lib/supabase/public';
+import type { Locale } from '@/i18n/routing';
 import type { Review, Trip } from '@/lib/types';
+import { getTripTitle } from '@/lib/trip-i18n';
 import { TripDetail } from '@/components/trips/TripDetail';
 
 export const dynamic = 'force-dynamic';
@@ -26,7 +28,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const trip = await getTrip(id);
   if (!trip) return {};
-  return { title: locale === 'ar' ? trip.title_ar : trip.title_en };
+  return { title: getTripTitle(trip, locale as Locale) };
 }
 
 export default async function TripPage({

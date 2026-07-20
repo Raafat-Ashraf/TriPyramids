@@ -2,10 +2,11 @@
 
 > Travel . Explore . Experience Egypt
 
-A bilingual (Arabic / English) marketing site for **TriPyramids**, an Egyptian
-luxury‑travel brand. Built with Next.js 14 (App Router), TypeScript, Tailwind
-CSS and Supabase, with a GSAP‑animated pyramid hero and a password‑protected
-admin dashboard for managing trips and moderating reviews.
+A four‑language (Arabic, English, Russian, Italian) marketing site for
+**TriPyramids**, an Egyptian luxury‑travel brand. Built with Next.js 14 (App
+Router), TypeScript, Tailwind CSS and Supabase, with a GSAP‑animated pyramid
+hero and a password‑protected admin dashboard for managing trips and
+moderating reviews.
 
 ---
 
@@ -18,7 +19,7 @@ admin dashboard for managing trips and moderating reviews.
 - **GSAP** — the self‑assembling three‑pyramid hero scene (looping `.from()`
   timeline, no ScrollTrigger, no paid plugins)
 - **Framer Motion** — the hero's three‑plane scroll parallax
-- **next-intl** — `/ar` and `/en` routing, defaulting to Arabic
+- **next-intl** — `/ar`, `/en`, `/ru` and `/it` routing, defaulting to Arabic
 
 ---
 
@@ -49,10 +50,25 @@ role still needs a base GRANT to touch the table at all.
 Run [`supabase/grants.sql`](./supabase/grants.sql) **once** in the Supabase SQL
 editor. After that the whole data layer works.
 
+### ⚠️ Required one‑time step: Russian/Italian trip columns
+
+The site's interface ships in four languages, but trip content (title/
+description) is admin‑authored per trip, and the original `trips` table only
+had Arabic/English columns. [`supabase/add-ru-it-columns.sql`](./supabase/add-ru-it-columns.sql)
+adds nullable `title_ru` / `title_it` / `description_ru` / `description_it`
+columns. Run it **once** in the Supabase SQL editor.
+
+This is optional in the sense that the app degrades gracefully without it —
+saving a trip with Russian/Italian text returns a clear inline error telling
+you to run the migration, and any trip not yet translated into Russian/Italian
+simply shows its English text on the site (see [`lib/trip-i18n.ts`](./lib/trip-i18n.ts)) —
+but you need it to actually store Russian/Italian trip content.
+
 ### Seed sample content
 
-Once the grants are in place, populate the site with 6 sample trips and 4
-approved reviews:
+Once the grants (and ideally the ru/it columns) are in place, populate the
+site with 6 sample trips — each with Arabic, English, Russian and Italian
+copy — and 4 approved reviews:
 
 ```bash
 npm run seed
@@ -94,9 +110,9 @@ npm run dev
 ```
 
 Then open <http://localhost:3000> — it redirects to `/ar`. Switch language with
-the **AR / EN** toggle in the header.
+the globe dropdown in the header (العربية / English / Русский / Italiano).
 
-- Public site: `/ar`, `/en`, and trip pages at `/ar/trips/<id>`.
+- Public site: `/ar`, `/en`, `/ru`, `/it`, and trip pages like `/ar/trips/<id>`.
 - Admin dashboard: `/dashboard` (redirects to `/dashboard/login`). Sign in with
   `ADMIN_PASSWORD`.
 
@@ -130,12 +146,16 @@ npm run start
   it verifies in both edge middleware and Node actions).
   [`middleware.ts`](./middleware.ts) redirects any `/dashboard/*` route except
   `/dashboard/login` to login when the cookie is missing or invalid.
-- **Trips management** — create / edit / delete, with both Arabic and English
-  title & description, location, price, duration, and an image URL.
-- **Reviews moderation** — filter by status; approve / reject / delete; pending
-  reviews are sorted first and highlighted.
-- The dashboard is bilingual too (AR / EN toggle, stored in a `dash_locale`
-  cookie) and is intentionally scoped to exactly these two areas.
+- **Trips management** — create / edit / delete, with title & description in
+  up to four languages (Arabic/English required, Russian/Italian optional —
+  see the migration note above), a language‑tabbed form
+  ([`components/dashboard/TripForm.tsx`](./components/dashboard/TripForm.tsx)),
+  location, duration, and photos uploaded straight from your device (camera or
+  gallery) to Supabase Storage — no image‑URL pasting.
+- **Reviews** — public submissions publish immediately (no approval step); the
+  dashboard here is for removing anything inappropriate.
+- The dashboard is four‑language too (stored in a `dash_locale` cookie) and is
+  intentionally scoped to exactly these two areas.
 
 ### The hero (`components/hero/`)
 
@@ -168,21 +188,26 @@ npm run start
 
 ```
 app/
-  [locale]/            Public site (ar/en) — home, trips/[id], layout, not-found
+  [locale]/            Public site (ar/en/ru/it) — home, trips/[id], layout, not-found
   dashboard/           Admin area (separate <html> root)
     login/             Password login
     (panel)/           Guarded panel: trips (/) + reviews (/reviews)
   actions/             Server Actions (auth, reviews, admin-trips, admin-reviews)
-  fonts.ts             Shared next/font instances
+  fonts.ts             Shared next/font instances (Cairo/Poppins/Inter + Playfair)
 components/
   hero/                Hero + PyramidScene
-  layout/              Header, Footer, LocaleSwitcher
-  trips/ reviews/      Public cards, sections, forms, trip detail
-  dashboard/           Shell, managers, forms
+  layout/              Header, Footer, LocaleSwitcher (4-language dropdown)
+  trips/ reviews/      Public cards, sections, forms, trip detail + gallery
+  dashboard/           Shell, managers, forms (language-tabbed trip form)
   ui/                  Button, Magnetic, Counter, StarRating
   Glyphs.tsx           Hieroglyph accent set + section divider
-i18n/                  next-intl routing, navigation, request config
-lib/                   supabase clients, session, rate-limit, types, utils
-messages/              ar.json, en.json
-supabase/schema.sql    Reference schema (already applied)
+i18n/                  next-intl routing (ar/en/ru/it), navigation, request config
+lib/                   supabase clients, session, rate-limit, types, utils,
+                        trip-i18n.ts (per-locale title/description with
+                        English fallback), trip-images.ts (multi-image storage)
+messages/              ar.json, en.json, ru.json, it.json — kept in key parity
+supabase/
+  schema.sql            Reference schema (already applied)
+  grants.sql             One-time table GRANTs (required)
+  add-ru-it-columns.sql  One-time ru/it trip columns (required for ru/it trip content)
 ```

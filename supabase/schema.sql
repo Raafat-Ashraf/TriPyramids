@@ -20,6 +20,14 @@ create table trips (
   created_at timestamptz default now()
 );
 
+-- Russian and Italian are optional add-ons to the original two-language
+-- schema — see add-ru-it-columns.sql. A trip untranslated into ru/it falls
+-- back to English on the site (lib/trip-i18n.ts).
+alter table trips add column if not exists title_ru text;
+alter table trips add column if not exists title_it text;
+alter table trips add column if not exists description_ru text;
+alter table trips add column if not exists description_it text;
+
 create table reviews (
   id uuid primary key default gen_random_uuid(),
   trip_id uuid references trips(id) on delete set null,
